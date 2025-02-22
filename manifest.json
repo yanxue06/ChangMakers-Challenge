@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Energy GOOOOOD",
+  "version": "1.0.0",
+  "description": "A Chrome Extension built with React",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Open Extension"
+  },
+  "permissions": [],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+} 

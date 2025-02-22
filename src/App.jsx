@@ -1,34 +1,34 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentPrompt, setcurrentPrompt] = useState(0)
+  const [dailyTotal, setdailyTotal] = useState(0)
+  const [weeklyAverage, setweeklyAverage] = useState(0)
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="extension-container">
+      <header className="extension-header">
+        <h1>PowerPrompt</h1>
+      </header>
+      <main className="extension-content">
+        <div className="energy-display">
+          <div className="energy-stat">
+            <span>Current Prompt Energy Usage: </span>
+            <span className="energy-value">{currentPrompt} kWh</span>
+          </div>
+          <div className="energy-stat">
+            <span>Daily Total: </span>
+            <span className="energy-value">{dailyTotal} kWh</span>
+          </div>
+          <div className="energy-stat">
+            <span>Weekly Average: </span>
+            <span className="energy-value">{weeklyAverage} kWh</span>
+          </div>
+        </div>
+        <p>Monitor your AI conversation energy consumption in real-time!</p>
+      </main>
+    </div>
   )
 }
 
