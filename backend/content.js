@@ -3,72 +3,16 @@ console.log('🚀 Token Tracker: Script loaded');
 let totalTokens = 0;
 let clickHandler = null;  // Store reference to click handler
 
-function getActiveInputBox() {
-    const input = document.querySelector('textarea[placeholder="Ask anything"]');
-    console.log('🔍 Looking for input box:', input ? 'Found' : 'Not found');
-    return input;
-}
-
-function getSendButton() {
-    console.log('🔍 Looking for send button...');
-    const allButtons = Array.from(document.querySelectorAll('button'));
-    const button = allButtons.find(button => 
-        button.getAttribute('data-testid')?.includes('send-button') ||
-        button.id?.includes('send-button')
-    );
-    console.log('🔘 Send button:', button ? 'Found' : 'Not found');
-    return button;
-}
-
-function trackUserInput() {
-    console.log('👀 Attempting to track input...');
-    let chatInput = getActiveInputBox();
-   
-    if (!chatInput) {
-        console.error("❌ ChatGPT elements not found! Retrying in 1s...");
-        setTimeout(trackUserInput, 1000);
-        return;
-    }
-
-    console.log("✅ ChatGPT Token Tracker: Elements found and ready");
-
-    // Handle Enter key
-    chatInput.removeEventListener("keydown", detectInput);
-    chatInput.addEventListener("keydown", detectInput);
-    console.log('⌨️ Enter key handler attached');
-
-    // Remove old click handler if it exists
-    if (clickHandler) {
-        document.removeEventListener('click', clickHandler);
-        console.log('🗑️ Old click handler removed');
-    }
-
-    // Create new click handler
-    clickHandler = function(e) {
-        const button = e.target.closest('button');
-        if (button && (
-            button.getAttribute('data-testid')?.includes('send-button') ||
-            button.id?.includes('send-button')
-        )) {
-            console.log('🖱️ Send button clicked');
-            handleMessageSent();
-        }
-    };
-
-    // Add new click handler
-    document.addEventListener('click', clickHandler);
-    console.log('🖱️ New click handler attached');
-
-    function detectInput(event) {
-        if (event.key === "Enter" && !event.shiftKey) {
-            console.log('⌨️ Enter key pressed');
-            handleMessageSent();
-        }
+// Wrap everything in a try-catch to handle context invalidation
+try {
+    function getActiveInputBox() {
+        return document.querySelector('textarea[placeholder="Message ChatGPT..."]') ||
+               document.querySelector('textarea#prompt-textarea');
     }
 
     function handleMessageSent() {
-        console.log('📨 Message sent detected!');
-        setTimeout(() => {
+        try {
+            console.log('📨 Message sent detected!');
             totalTokens += 10;
             
             console.log('------------------------');
@@ -76,7 +20,6 @@ function trackUserInput() {
             console.log(`🔢 New total tokens: ${totalTokens}`);
             console.log('------------------------');
             
-            console.log('💾 Updating storage...');
             chrome.storage.local.set({ 
                 tokenCount: totalTokens,
                 energyStats: {
@@ -87,36 +30,91 @@ function trackUserInput() {
                     carbonFootprint: totalTokens * 0.0001
                 }
             }, () => {
-                console.log("✅ Storage updated successfully:", totalTokens);
-                console.log("📊 Energy stats updated");
+                console.log("✅ Storage updated:", totalTokens);
+                // Re-initialize after storage update
+                setTimeout(initialize, 100);
             });
-        }, 100);
+        } catch (error) {
+            console.error('Error in handleMessageSent:', error);
+            // Try to recover
+            initialize();
+        }
     }
-}
 
-// Initialize everything
-function initialize() {
-    console.log('🎬 Starting initialization...');
-    chrome.storage.local.get('tokenCount', (data) => {
-        totalTokens = data.tokenCount || 0;
-        console.log('📥 Loaded initial token count:', totalTokens);
-        console.log('🔄 Starting input tracking...');
-        trackUserInput();
+    function setupListeners() {
+        try {
+            console.log('👀 Setting up listeners...');
+            
+            // Handle button clicks
+            document.addEventListener('click', (e) => {
+                try {
+                    const button = e.target.closest('button');
+                    if (button && (
+                        button.getAttribute('data-testid')?.includes('send') ||
+                        button.getAttribute('aria-label')?.includes('send')
+                    )) {
+                        handleMessageSent();
+                    }
+                } catch (error) {
+                    console.error('Error in click handler:', error);
+                }
+            });
+
+            // Handle Enter key
+            document.addEventListener('keydown', (e) => {
+                try {
+                    if (e.key === 'Enter' && !e.shiftKey && getActiveInputBox()) {
+                        handleMessageSent();
+                    }
+                } catch (error) {
+                    console.error('Error in keydown handler:', error);
+                }
+            });
+
+            console.log('✅ Listeners set up');
+        } catch (error) {
+            console.error('Error in setupListeners:', error);
+        }
+    }
+
+    function initialize() {
+        try {
+            console.log('🎬 Starting initialization...');
+            chrome.storage.local.get('tokenCount', (data) => {
+                totalTokens = data.tokenCount || 0;
+                console.log('📥 Initial token count:', totalTokens);
+                setupListeners();
+            });
+        } catch (error) {
+            console.error('Error in initialize:', error);
+            // Try again after a delay
+            setTimeout(initialize, 1000);
+        }
+    }
+
+    // Initialize on load
+    initialize();
+
+    // Re-initialize on visibility changes
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) {
+            console.log('🔄 Page visible, reinitializing...');
+            initialize();
+        }
     });
-}
 
-// Try to initialize when DOM is ready
-if (document.readyState === 'loading') {
-    console.log('⏳ Waiting for DOM...');
-    document.addEventListener('DOMContentLoaded', initialize);
-} else {
-    console.log('🏃 DOM ready, initializing now...');
-    initialize();
-}
+    // Periodic check
+    setInterval(() => {
+        try {
+            const input = getActiveInputBox();
+            if (input) {
+                setupListeners();
+            }
+        } catch (error) {
+            console.error('Error in periodic check:', error);
+        }
+    }, 2000);
 
-// Also try again after a delay to catch dynamic updates
-console.log('⏰ Setting up delayed initialization...');
-setTimeout(() => {
-    console.log('🔄 Running delayed initialization...');
-    initialize();
-}, 2000);
+} catch (error) {
+    console.error('Fatal error in content script:', error);
+}

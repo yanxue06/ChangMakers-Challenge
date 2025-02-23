@@ -17,11 +17,12 @@
               "https://chatgpt.com/*"
           ],
           "js": ["content.js"],
-          "run_at": "document_idle"
+          "run_at": "document_start"
       }
   ],
   "background": {
-      "service_worker": "background.js"
+      "service_worker": "background.js",
+      "type": "module"
   },
   "action": {
     "default_popup": "index.html",
