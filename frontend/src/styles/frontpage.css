@@ -15,7 +15,7 @@ font-size: 1.5rem;
 .frontpage {
 	color: #f4efe5;
 	height: 100vh;
-	width: 100vw;
+	width: 100%;
 	background-image: url('../assets/CMC.png');
 	background-size: cover;
 	background-position: center;
@@ -48,13 +48,13 @@ font-size: 1.5rem;
 	margin-top: 50px;
 	margin-left: -40px;
 	height: 200px;
-	width: 90%;
+	max-width: 90%;
   }
   
   .desert-image {
 	margin-left: -40px;
 	height: 400px;
-	width: 90%;
+	max-width: 90%;
 	margin-top: 20px;
   }
   
