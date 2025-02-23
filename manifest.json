@@ -9,15 +9,15 @@
       "scripting"
   ],
   "host_permissions": [
-      "https://chat.openai.com/*"
+      "https://chatgpt.com/*"
   ],
   "content_scripts": [
       {
           "matches": [
-              "https://chat.openai.com/*"
+              "https://chatgpt.com/*"
           ],
           "js": ["content.js"],
-          "run_at": "document_start"
+          "run_at": "document_idle"
       }
   ],
   "background": {

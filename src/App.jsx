@@ -7,15 +7,14 @@ function App() {
   const [weeklyAverage, setWeeklyAverage] = useState(0)
   const [tokenCount, setTokenCount] = useState(0)
   const [newStat, setNewStat] = useState(0)
+  const [carbonFootprint, setCarbonFootprint] = useState(0)
 
   useEffect(() => {
-    // Make the update function available to popup.js
     window.updateEnergy = ({ tokens, currentPrompt, dailyTotal, weeklyAverage }) => {
-      setTokenCount(tokens);
-      setCurrentPrompt(currentPrompt);
-      setDailyTotal(dailyTotal);
-      setWeeklyAverage(weeklyAverage);
-      setNewStat(tokens * 2)
+        setTokenCount(tokens);
+        setCurrentPrompt(currentPrompt);
+        setDailyTotal(dailyTotal);
+        setWeeklyAverage(weeklyAverage);
     };
   }, []);
 
@@ -43,8 +42,12 @@ function App() {
             <span className="energy-value">{weeklyAverage} kWh</span>
           </div>
           <div className="energy-stat">
-            <span>My New Stat: </span>
+            <span>New Stat: </span>
             <span className="energy-value">{newStat}</span>
+          </div>
+          <div className="energy-stat">
+            <span>Carbon Footprint: </span>
+            <span className="energy-value">{carbonFootprint} kg</span>
           </div>
         </div>
         <p>Monitor your AI conversation energy consumption in real-time!</p>
