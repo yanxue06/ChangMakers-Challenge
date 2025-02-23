@@ -1,0 +1,29 @@
+{
+    "manifest_version": 3,
+    "name": "ChatGPT Token Tracker",
+    "version": "1.0",
+    "description": "Track tokens in ChatGPT",
+    "permissions": [
+        "storage",
+        "activeTab",
+        "scripting"
+    ],
+    "host_permissions": [
+        "https://chatgpt.com/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://chatgpt.com/*"
+            ],
+            "js": ["content.js"],
+            "run_at": "document_start"
+        }
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_popup": "popup.html"
+    }
+}
