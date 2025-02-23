@@ -1,14 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "Energy GOOOOOD",
+  "name": "Energy Monitor",
   "version": "1.0.0",
-  "description": "A Chrome Extension built with React",
+  "description": "Monitor your AI conversation energy consumption in real-time!",
   "action": {
     "default_popup": "index.html",
-    "default_title": "Open Extension"
+    "default_title": "Energy Monitor"
   },
   "permissions": [],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
   }
-} 
+}

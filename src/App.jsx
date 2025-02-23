@@ -1,10 +1,23 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 function App() {
-  const [currentPrompt, setcurrentPrompt] = useState(0)
-  const [dailyTotal, setdailyTotal] = useState(0)
-  const [weeklyAverage, setweeklyAverage] = useState(0)
+  const [currentPrompt, setCurrentPrompt] = useState(0)
+  const [dailyTotal, setDailyTotal] = useState(0)
+  const [weeklyAverage, setWeeklyAverage] = useState(0)
+  const [tokenCount, setTokenCount] = useState(0)
+  const [newStat, setNewStat] = useState(0)
+
+  useEffect(() => {
+    // Make the update function available to popup.js
+    window.updateEnergy = ({ tokens, currentPrompt, dailyTotal, weeklyAverage }) => {
+      setTokenCount(tokens);
+      setCurrentPrompt(currentPrompt);
+      setDailyTotal(dailyTotal);
+      setWeeklyAverage(weeklyAverage);
+      setNewStat(tokens * 2)
+    };
+  }, []);
 
   return (
     <div className="extension-container">
@@ -14,8 +27,12 @@ function App() {
       <main className="extension-content">
         <div className="energy-display">
           <div className="energy-stat">
+            <span>Total Tokens Used: </span>
+            <span className="energy-value">{tokenCount}</span>
+          </div>
+          <div className="energy-stat">
             <span>Current Prompt Energy Usage: </span>
-            <span className="energy-value">{currentPrompt} kWh</span>
+            <span className="energy-value">{currentPrompt.toFixed(4)} kWh</span>
           </div>
           <div className="energy-stat">
             <span>Daily Total: </span>
@@ -24,6 +41,10 @@ function App() {
           <div className="energy-stat">
             <span>Weekly Average: </span>
             <span className="energy-value">{weeklyAverage} kWh</span>
+          </div>
+          <div className="energy-stat">
+            <span>My New Stat: </span>
+            <span className="energy-value">{newStat}</span>
           </div>
         </div>
         <p>Monitor your AI conversation energy consumption in real-time!</p>
