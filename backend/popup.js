@@ -1,7 +1,15 @@
 document.addEventListener('DOMContentLoaded', function() {
     function updateDisplay() {
-        chrome.storage.local.get('tokenCount', function(data) {
-            document.getElementById('tokenCount').textContent = data.tokenCount || 0;
+        chrome.storage.local.get(['tokenCount', 'energyStats'], function(data) {
+            if (window.updateEnergy && data.energyStats) {
+                window.updateEnergy({
+                    tokens: data.energyStats.tokens,
+                    currentPrompt: data.energyStats.currentPrompt,
+                    dailyTotal: data.energyStats.dailyTotal,
+                    weeklyAverage: data.energyStats.weeklyAverage,
+                    carbonFootprint: data.energyStats.carbonFootprint
+                });
+            }
         });
     }
 
@@ -9,46 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
     updateDisplay();
 
     // Update when storage changes
-    chrome.storage.onChanged.addListener(function(changes) {
-        if (changes.tokenCount) {
+    chrome.storage.onChanged.addListener((changes) => {
+        if (changes.energyStats || changes.tokenCount) {
             updateDisplay();
         }
     });
-});
 
-// Listen for storage changes and update React component
-chrome.storage.onChanged.addListener((changes) => {
-    if (changes.tokenCount) {
-        const newTokens = changes.tokenCount.newValue;
-        // Calculate energy values (example conversion rates)
-        const energyPerToken = 0.0002; // Change energy per token
-        const currentEnergy = newTokens * energyPerToken;
-        
-        // Update React component through window.updateEnergy
-        if (window.updateEnergy) {
-            window.updateEnergy({
-                tokens: newTokens,
-                // energy calculation
-                currentPrompt: currentEnergy,
-                dailyTotal: currentEnergy * 2, 
-                weeklyAverage: currentEnergy / 5 
-            });
-        }
-    }
-});
-
-// Initial load of token count
-chrome.storage.local.get(['tokenCount'], (result) => {
-    const tokens = result.tokenCount || 0;
-    const energyPerToken = 0.0002;
-    const energy = tokens * energyPerToken;
-    
-    if (window.updateEnergy) {
-        window.updateEnergy({
-            tokens: tokens,
-            currentPrompt: energy,
-            dailyTotal: energy * 2,
-            weeklyAverage: energy / 5
-        });
-    }
+    // Poll for updates every second
+    setInterval(updateDisplay, 1000);
 });
