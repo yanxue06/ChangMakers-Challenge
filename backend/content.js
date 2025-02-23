@@ -51,7 +51,7 @@ function trackUserInput() {
         console.log('Message sent detected!');
         setTimeout(() => {
             let userMessage = chatInput.value.trim();
-            totalTokens += 3;
+            totalTokens += 5;
             
             console.log(`📝 Message detected: "${userMessage}"`);
             console.log(`🔢 New total tokens: ${totalTokens}`);

@@ -6,26 +6,17 @@ function App() {
   const [dailyTotal, setDailyTotal] = useState(0)
   const [weeklyAverage, setWeeklyAverage] = useState(0)
   const [tokenCount, setTokenCount] = useState(0)
+  const [newStat, setNewStat] = useState(0)
 
   useEffect(() => {
-    // Get initial token count when popup opens
-    chrome.storage.local.get(['tokenCount'], (result) => {
-      if (result.tokenCount) {
-        setTokenCount(result.tokenCount);
-        // Simple conversion example: 1 token = 0.0001 kWh (you can adjust this)
-        setCurrentPrompt(result.tokenCount * 0.0001);
-        setDailyTotal(result.tokenCount * 0.0001);
-      }
-    });
-
-    // Listen for updates from content script
-    chrome.storage.onChanged.addListener((changes) => {
-      if (changes.tokenCount) {
-        setTokenCount(changes.tokenCount.newValue);
-        setCurrentPrompt(changes.tokenCount.newValue * 0.0001);
-        setDailyTotal(changes.tokenCount.newValue * 0.0001);
-      }
-    });
+    // Make the update function available to popup.js
+    window.updateEnergy = ({ tokens, currentPrompt, dailyTotal, weeklyAverage }) => {
+      setTokenCount(tokens);
+      setCurrentPrompt(currentPrompt);
+      setDailyTotal(dailyTotal);
+      setWeeklyAverage(weeklyAverage);
+      setNewStat(tokens * 2)
+    };
   }, []);
 
   return (
@@ -45,11 +36,15 @@ function App() {
           </div>
           <div className="energy-stat">
             <span>Daily Total: </span>
-            <span className="energy-value">{dailyTotal.toFixed(4)} kWh</span>
+            <span className="energy-value">{dailyTotal} kWh</span>
           </div>
           <div className="energy-stat">
             <span>Weekly Average: </span>
-            <span className="energy-value">{weeklyAverage.toFixed(4)} kWh</span>
+            <span className="energy-value">{weeklyAverage} kWh</span>
+          </div>
+          <div className="energy-stat">
+            <span>My New Stat: </span>
+            <span className="energy-value">{newStat}</span>
           </div>
         </div>
         <p>Monitor your AI conversation energy consumption in real-time!</p>
