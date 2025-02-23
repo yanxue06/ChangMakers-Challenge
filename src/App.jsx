@@ -6,7 +6,6 @@ function App() {
   const [dailyTotal, setDailyTotal] = useState(0)
   const [weeklyAverage, setWeeklyAverage] = useState(0)
   const [tokenCount, setTokenCount] = useState(0)
-  const [newStat, setNewStat] = useState(0)
   const [carbonFootprint, setCarbonFootprint] = useState(0)
 
   useEffect(() => {
@@ -48,10 +47,6 @@ function App() {
           <div className="energy-stat">
             <span>Weekly Average: </span>
             <span className="energy-value">{weeklyAverage} kWh</span>
-          </div>
-          <div className="energy-stat">
-            <span>New Stat: </span>
-            <span className="energy-value">{newStat}</span>
           </div>
           <div className="energy-stat">
             <span>Carbon Footprint: </span>
