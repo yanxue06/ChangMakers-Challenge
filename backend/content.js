@@ -1,15 +1,13 @@
 console.log('🟢 Token Tracker: Initial script load');
 
 let totalTokens = 0;
+let isInitialized = false;
 
 function getActiveInputBox() {
-    // Try multiple possible selectors
     const selectors = [
         'textarea[placeholder="Ask anything"]',
         'textarea[placeholder="Message ChatGPT..."]',
-        'textarea#prompt-textarea',
-        // Add more potential selectors
-        'textarea[data-id="root"]'
+        'textarea#prompt-textarea'
     ];
     
     for (let selector of selectors) {
@@ -19,6 +17,7 @@ function getActiveInputBox() {
             return element;
         }
     }
+    console.log('❌ No input box found');
     return null;
 }
 
@@ -53,28 +52,20 @@ function getSendButton() {
 }
 
 function trackUserInput() {
-    console.log('Attempting to track input...');
+    console.log('👀 Attempting to track input...');
     let chatInput = getActiveInputBox();
    
     if (!chatInput) {
         console.error("❌ ChatGPT elements not found!");
-        // Retry after a short delay
-        setTimeout(trackUserInput, 1000);
+        if (!isInitialized) {
+            console.log('🔄 Retrying in 1s...');
+            setTimeout(trackUserInput, 1000);
+        }
         return;
     }
 
     console.log("✅ ChatGPT Token Tracker: Elements found");
-
-    // Remove old listeners if they exist
-    chatInput.removeEventListener("keydown", detectInput);
-    document.removeEventListener('click', handleButtonClick);
-
-    // Add new listeners
-    chatInput.addEventListener("keydown", detectInput);
-    document.addEventListener('click', handleButtonClick);
-    
-    console.log('✅ Keydown listener attached');
-    console.log('✅ Click listener attached');
+    isInitialized = true;
 
     function detectInput(event) {
         if (event.key === "Enter" && !event.shiftKey) {
@@ -86,13 +77,6 @@ function trackUserInput() {
     function handleButtonClick(e) {
         const button = e.target.closest('button');
         if (!button) return;
-
-        console.log('👆 Button clicked:', {
-            text: button.textContent,
-            testid: button.getAttribute('data-testid'),
-            class: button.className,
-            ariaLabel: button.getAttribute('aria-label')
-        });
         
         if (button.getAttribute('data-testid')?.includes('send') ||
             button.getAttribute('aria-label')?.toLowerCase()?.includes('send')) {
@@ -100,10 +84,20 @@ function trackUserInput() {
             handleMessageSent();
         }
     }
+
+    // Remove old listeners if they exist
+    chatInput.removeEventListener("keydown", detectInput);
+    document.removeEventListener('click', handleButtonClick);
+
+    // Add new listeners
+    chatInput.addEventListener("keydown", detectInput);
+    document.addEventListener('click', handleButtonClick);
+    
+    console.log('✅ All listeners attached successfully');
 }
 
 function handleMessageSent() {
-    console.log('🎯 Message sent detected!');
+    console.log('📨 Message sent detected!');
     let chatInput = getActiveInputBox();
     
     if (!chatInput) {
@@ -111,15 +105,14 @@ function handleMessageSent() {
         return;
     }
     
-    // Get message content before it's cleared
-    let userMessage = chatInput.value.trim();
+    // // Get message content before it's cleared
+    // let userMessage = chatInput.value.trim();
     
     // Update stats
-    totalTokens += 10; // Example increment
+    totalTokens += 10;
     
     console.log('------------------------');
-    console.log('✨ NEW MESSAGE DETECTED ✨');
-    console.log(`📝 Message: "${userMessage}"`);
+    console.log('✨ NEW MESSAGE PROCESSED ✨');
     console.log(`🔢 Tokens: ${totalTokens}`);
     console.log('------------------------');
     
@@ -139,13 +132,14 @@ function handleMessageSent() {
             weeklyAverage: weeklyAverage,
             carbonFootprint: carbonFootprint
         }
-    });
-
-    // Re-initialize tracking after a short delay
-    setTimeout(() => {
-        console.log('🔄 Re-initializing tracking...');
+    }, () => {
+        console.log("✅ Storage updated successfully:", totalTokens);
+        console.log("📊 Energy stats updated");
+        
+        // Important: Re-initialize tracking immediately
+        console.log('🔄 Re-initializing input tracking...');
         trackUserInput();
-    }, 500);
+    });
 }
 
 // Initialize when script loads
