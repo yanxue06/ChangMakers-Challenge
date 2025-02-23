@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Libre+Baskerville:ital@0;1&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+h1 {
+	font-family: 'Libre Baskerville', serif;
+	font-weight: 700;
+	font-style: italic;
+	font-size: 5rem;
+}
+.slogan {
+font-family: "Roboto", serif;
+font-size: 1.5rem;
+  font-weight: 700;
+  font-style: bold;
+  margin-top: -80px;
+}
+.frontpage {
+	color: #f4efe5;
+	height: 100vh;
+	width: 100vw;
+	background-image: url('../assets/CMC.png');
+	background-size: cover;
+	background-position: center;
+	background-attachment: fixed;
+	display: flex; 
+	flex-direction: column; 
+	justify-content: center; 
+	align-items: center;
+}
+.about-container {
+	display: grid;
+	grid-template-columns: 1fr 1fr; /* Two columns */
+	grid-template-rows: auto auto; /* Two rows */
+	gap: 0rem;
+	align-items: center;
+	grid-template-areas: 
+	  "images content" /* Left column for images, right for content */
+	  "images content"; /* Repeat content in second row */
+  }
+  
+  /* Images container (left side) */
+  .images-column {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	grid-area: images; /* Grid placement for images */
+  }
+  
+  .mountain-image {
+	margin-top: 50px;
+	margin-left: -40px;
+	height: 200px;
+	width: 90%;
+  }
+  
+  .desert-image {
+	margin-left: -40px;
+	height: 400px;
+	width: 90%;
+	margin-top: 20px;
+  }
+  
+  /* Content container (right side) */
+  .content-column {
+	display: flex;
+	flex-direction: column;
+	gap: 0rem;
+	grid-area: content; /* Grid placement for content */
+  }
+  
+  .about-title {
+	margin-left: -30px;
+	font-family: 'Libre Baskerville', serif;
+	font-size: 4rem;
+	font-weight: bold;
+	color: #000;
+	text-align: left;
+	align-items: center;
+  }
+  
+  .about-text {
+	margin-left: -30px;
+	margin-top: -60px;
+	font-family: "DM Sans", serif;
+	font-weight: 400;
+	display: flex;
+	flex-direction: column; /* Flex column layout */
+	text-align: left;
+	gap: 0rem;
+	font-size: 1.4rem;
+	color: #333;
+	line-height: 1.4;
+  }
+  
+  .company-name {
+	font-family: 'Libre Baskerville', serif;
+	font-weight: 800;
+	font-style: italic;
+  }
+  
+  .download-button {
+	margin-left: 90px;
+	background-color: #5C7B7D;
+	color: white;
+	padding: 1rem 2rem;
+	border-radius: 9999px;
+	font-weight: 600;
+	border: none;
+	cursor: pointer;
+	font-size: 1.3rem;
+	width: 400px;
+	text-align: center;
+  }
+  
+  .download-button:hover {
+	background-color: #4a6466;
+  }
+  
+  /* Responsive design for mobile */
+  @media (max-width: 768px) {
+	.about-container {
+	  grid-template-columns: 1fr; /* Stack images and content on mobile */
+	}
+  
+	.about-title {
+	  font-size: 2.5rem;
+	}
+  
+	.about-text {
+	  font-size: 1rem;
+	}
+  }
