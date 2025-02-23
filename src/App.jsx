@@ -10,12 +10,20 @@ function App() {
   const [carbonFootprint, setCarbonFootprint] = useState(0)
 
   useEffect(() => {
-    window.updateEnergy = ({ tokens, currentPrompt, dailyTotal, weeklyAverage }) => {
+    window.updateEnergy = ({ tokens, currentPrompt, dailyTotal, weeklyAverage, carbonFootprint }) => {
         setTokenCount(tokens);
         setCurrentPrompt(currentPrompt);
         setDailyTotal(dailyTotal);
         setWeeklyAverage(weeklyAverage);
+        setCarbonFootprint(carbonFootprint);
     };
+
+    // Initial load of data
+    chrome.storage.local.get(['energyStats'], function(data) {
+        if (data.energyStats) {
+            window.updateEnergy(data.energyStats);
+        }
+    });
   }, []);
 
   return (
