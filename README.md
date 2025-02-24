@@ -18,11 +18,10 @@ With an engaging animated monkey mascot that reacts to prompt efficiency, PowerP
 ---
 
 ## Technologies Used
-- React
+- React + Vite
 - JavaScript
 - HTML
 - CSS
-
 
 ---
 
