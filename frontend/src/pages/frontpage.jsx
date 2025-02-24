@@ -2,6 +2,7 @@ import React from 'react';
 import '../styles/frontpage.css';
 import mountainImg from '../assets/mountain.png';
 import desertImg from '../assets/desert.png';
+ 
 const FrontPage = () => {
   return (
 	<div>
