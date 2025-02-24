@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from './components/navbar';
 import FrontPage from './pages/frontpage';
 import AIImpactArticle from "./pages/article";
+import PromptEvaluator from "./pages/prompt";
 
 function App() {
   const [count, setCount] = useState(0)
@@ -16,7 +17,7 @@ function App() {
 			<Route path="/" element={<FrontPage />} />  
 			<Route path="/home" element={<FrontPage />} />    
 			<Route path="/impact" element={<AIImpactArticle />} />    
-			{/* <Route path="/promptengineering" element={<PromptEngineering />} /> \ */}
+			<Route path="/promptevaluator" element={<PromptEvaluator />} /> \
         	</Routes>
 		</Router>
   </div>

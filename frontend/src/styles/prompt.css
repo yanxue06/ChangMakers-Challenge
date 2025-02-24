@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Libre+Baskerville:ital@0;1&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+.info-container {
+	font-family: "Roboto", serif;
+	font-size: 1.3rem;
+	font-weight: 400;
+}
+.progress-svg {
+	margin-top: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  }
+  
+.additional-info {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr); /* Creates 3 equal columns */
+	gap: 1.5rem; /* Adjust the spacing between the cards */
+	width: 70%; /* Ensures it takes up full width */
+	padding: 0px 20px 30px; /* Add padding around the grid */
+	box-sizing: border-box; /* Includes padding in the element's total width and height */
+  }
+  .card {
+	font-family: "Roboto", serif;
+	font-size: 1rem;
+	font-weight: 400;
+	background-color:  rgba(14, 87, 77, 0.1);  /* Light background color */
+	padding: 20px; /* Padding inside each card */
+	border-radius: 8px; /* Rounded corners */
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+	text-align: start; /* Center the text inside the card */
+	transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions on hover */
+	line-height: 25px;
+  }
+  .card h3 {
+	text-align: center;
+  }
+  .card:hover {
+	transform: translateY(-3px); /* Slightly raise the card on hover */
+	box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+  }
+.page-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	height: 100vh;
+	background-color: white;
+  }
+  
+  .input-container {
+	width: 80%;
+	max-width: 800px;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+  }
+  
+  .input-box {
+	font-family: "Roboto", serif;
+	font-size: 1.5rem;
+	font-weight: 400;
+	width: 100%;
+	padding: 12px 10px;
+	margin-top: 10px;
+	font-size: 1rem;
+	border: 2px solid #ccc;
+	border-radius: 8px;
+	outline: none;
+	transition: border 0.3s ease;
+	height: auto; /* Let it expand vertically */
+	min-height: 40px; /* Set a minimum height */
+	resize: none; /* Prevent manual resizing */
+  }
+  
+  .input-box:focus {
+	border-color: #0e574db3;  /* Blue border when focused */
+  }
+  
+  .submit-button {
+	margin-top: 15px;
+	height: 40%;
+	padding: 20px 13px;
+	font-size: 1rem;
+	background-color: rgba(14, 87, 77, 0.7); 
+	color: white;
+	border: none;
+	border-radius: 9999px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	text-align: center; /* Centers text horizontally */
+	display: flex; /* Make the button a flex container */
+	justify-content: center; /* Center the text horizontally */
+	align-items: center; /* Center the text vertically */
+  }
+  
+  .submit-button:hover {
+	background-color: rgba(14, 87, 77, 1);
+  }
+  
+  .feedback {
+	margin-top: 20px;
+	font-weight: bold;
+	font-size: 1.2rem;
+  }
+  
+  .feedback.not-good {
+	color: #e74c3c; /* Red */
+  }
+  
+  .feedback.good {
+	color: #f39c12; /* Yellow */
+  }
+  
+  .feedback.very-good {
+	color: #2ecc71; /* Green */
+  }
+  

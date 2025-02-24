@@ -21,9 +21,9 @@ export default function Navbar() {
                         IMPACT
                     </Link>
 
-                    {/* <Link to="/gallery" className="navbar-link">
-                        GALLERY
-                    </Link> */}
+                    <Link to="/promptevaluator" className="navbar-link">
+                        TRY IT OUT!
+                    </Link>
 
                     {/* <a href="#contact" className="navbar-link">
                         PROMPT ENGINEERING

@@ -1,19 +1,11 @@
-  /* Navbar Container */
-  .navbar {
-    position: fixed;
-    width: 100vw; 
-    z-index: 1200;
-    background-color: transparent;
-    box-shadow: none;
-    transition: background-color 0.8s ease, box-shadow 0.8s ease;   
-  }
-  
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Libre+Baskerville:ital@0;1&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
   /* Navbar when scrolled */
-  .navbar-scrolled {
+.navbar-scrolled {
     position: fixed;
     width: 100%;
     
-    background-color: rgba(8, 10, 13, 0.8);
+    background-color: rgb(253, 249, 238);
     
     -webkit-backdrop-filter: blur(10px); /* for Safari support */
     backdrop-filter: blur(10px);
@@ -24,10 +16,14 @@
   
   /* Navbar Inner Container */
   .navbar-container {
-	top: 60px; 
+	position: absolute;
+	width: 100%; 
+    z-index: 1200;
+    box-shadow: none;
+    transition: background-color 0.8s ease, box-shadow 0.8s ease; 
     display: flex;
     justify-content: space-between; 
-	background-color: rgb(18, 90, 197, 0.2);
+	background-color: rgba(14, 87, 77, 0.7); 
     align-items: center;
     padding: 1% 4%; 
     width: 100%;
@@ -35,17 +31,24 @@
   }
   
   /* Logo */
-  .navbar-logo a {
-    font-size: 30px;
-    font-weight: bold;
+  .navbar-logo {
+    font-size: 20px;
+    font-weight: bolder;
     text-decoration: none;
     color: rgb(253, 249, 238);
     margin: 0; 
     padding: 0; 
+	font-family: 'Libre Baskerville', serif;
+	font-style: italic;
+	font-size: 1rem;
   }
   
   /* Links for Desktop */
   .navbar-links {
+	font-family: "Roboto", serif;
+	font-size: 1rem;
+	font-weight: 700;
+	font-style: bold;
     display: flex;
     height: 100%; 
     align-items: center; 
@@ -54,7 +57,7 @@
   
   .navbar-link {
     text-decoration: none;
-    color: black;
+    color: rgb(253, 249, 238);
     font-size: 22px;
     font-weight: bold;
     padding: 5px 10px;
@@ -78,7 +81,7 @@
 }
 
 
-/* @media only screen and (max-width: 750px) {
+@media only screen and (max-width: 750px) {
   .navbar-link { 
     font-size: 0.65rem; 
   }
@@ -89,7 +92,7 @@
   .navbar-logo a {
     font-size: 0.8rem;
   }
-} */
+}
 
 
 
